@@ -1,3 +1,4 @@
+
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 import datetime
@@ -18,6 +19,7 @@ class Bakfile(db.Model):
     baktype = db.Column(db.Integer,default=0)
     incsize = db.Column(db.BigInteger)
     has_restore = db.Column(db.Boolean,default=0)
+    to_f01 = db.Column(db.Integer)
     mark = db.Column(db.String(50))
     # def __init__(self,ip,bakname, bakdir,md5sum,filesize,starttime,stoptime,costtime,baktype,incsize,has_restore,mark):
     #     self.ip = ip
