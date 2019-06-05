@@ -79,7 +79,7 @@ class Mrecord(Resource):
                 db.session.commit()
                 code = 200
                 result = "RECORD SUCCESS"
-            except Exception as e:
+            except:
                 result = "RECORD FAILE"
                 code = 600
         else:
