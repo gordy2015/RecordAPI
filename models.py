@@ -13,8 +13,8 @@ class Bakfile(db.Model):
     bakdir = db.Column(db.String(150))
     md5sum = db.Column(db.String(50))
     filesize = db.Column(db.BigInteger)
-    starttime = db.Column(db.Integer)  #保存时间戳
-    stoptime = db.Column(db.Integer)
+    starttime = db.Column(db.DateTime)  #保存时间戳
+    stoptime = db.Column(db.DateTime)
     costtime = db.Column(db.Integer)
     baktype = db.Column(db.Integer,default=1) #1全量 0增量
     incsize = db.Column(db.BigInteger)

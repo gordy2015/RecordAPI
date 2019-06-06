@@ -2,7 +2,7 @@ from flask import Flask,request
 from flask_restful import Resource, Api,reqparse,fields,marshal_with,marshal,request
 from models import db,Bakfile
 import config
-import datetime
+import time
 
 app = Flask(__name__)
 app.config.from_object(config)
@@ -62,16 +62,19 @@ class Mrecord(Resource):
         # t = {'ip': a,'bakname':b}
         #获取上一次的文件大小
         if lastf:
-            try:
-                w = Bakfile.query.order_by(Bakfile.id.desc()).limit(1)
-                for i in w:
-                    last_filesize = i.filesize
-            except:
-                last_filesize = 0
+            w = Bakfile.query.order_by(Bakfile.id.desc()).limit(1)
+            last_filesize = 0
+            for i in w:
+                last_filesize = i.filesize
             return last_filesize
+
 
         #新增一条记录
         if a and b:
+            timeArray = time.localtime(int(f))
+            f = time.strftime("%Y-%m-%d %H:%M:%S", timeArray)
+            timeArray = time.localtime(int(g))
+            g = time.strftime("%Y-%m-%d %H:%M:%S", timeArray)
             record = Bakfile(ip=a, bakname=b, bakdir=c, md5sum=d, filesize=e, starttime=f,
                              stoptime=g, costtime=h, incsize=i, to_f01=j, mark=k)
             try:
@@ -83,11 +86,11 @@ class Mrecord(Resource):
                 result = "RECORD FAILE"
                 code = 600
         else:
-            result = "not ip and bakname"
+            result = "not ip or bakname or starttime or stoptime"
             code = 601
         return result,code
 
 api.add_resource(Mrecord, '/mrecord')
 
 if __name__ == '__main__':
-    app.run(debug=True,host="192.168.100.254")
+    app.run(debug=True,host="192.168.74.104")
